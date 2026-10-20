@@ -17,7 +17,7 @@ body.resizing { cursor: col-resize; user-select: none; }
 .bar-home.is-active::after { content: ""; position: absolute; bottom: -7px; left: 50%; width: 18px; height: 2px; margin-left: -9px; border-radius: var(--r-full); background: var(--accent); }
 .tile.is-active::after { content: ""; position: absolute; bottom: -2px; left: 50%; width: 16px; height: 2px; margin-left: -8px; border-radius: var(--r-full); background: var(--accent); }
 .bar-count, .tile-badge { position: absolute; top: -2px; right: -4px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--pri); color: var(--pri-ink); font-size: 10px; font-weight: 700; line-height: 16px; text-align: center; box-shadow: 0 0 0 2px var(--nav); }
-.bar-picker { display: inline-flex; align-items: center; gap: var(--sp-2); height: 32px; padding: 0 var(--sp-3); border-radius: var(--r-full); color: var(--tx-2); font-weight: 500; font-size: var(--fs-small); margin-inline-start: var(--sp-1); }
+.bar-picker { display: inline-flex; align-items: center; gap: var(--sp-2); height: 32px; padding: 0 var(--sp-3); border-radius: var(--r-full); color: var(--tx-2); font-weight: 500; font-size: var(--fs-small); margin-inline-start: var(--sp-1); transition: background var(--fast), color var(--fast); }
 .bar-picker:hover { background: var(--hover); color: var(--tx); }
 .bar-mid { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--sp-1); padding-inline: var(--sp-2); border-inline-start: 1px solid var(--line); margin-inline-start: var(--sp-1); }
 .strip { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; height: var(--bar-h); display: flex; align-items: center; }
@@ -25,24 +25,26 @@ body.resizing { cursor: col-resize; user-select: none; }
 .strip-list { display: flex; gap: 6px; align-items: center; padding-inline: 4px; }
 .tile { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--r-md); flex: none; transition: background var(--fast), transform var(--fast); }
 .tile:hover, .tile:focus-visible { background: var(--hover); }
-.tile:hover { transform: translateY(-1px); }
-.tile .cicon { border-radius: 50%; transition: transform var(--fast), box-shadow var(--fast); }
-.tile:hover .cicon { transform: scale(1.06); }
+.tile .cicon { border-radius: 50%; transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease); }
+.tile:hover .cicon { transform: scale(1.035); }
 .tile.is-active { background: color-mix(in srgb, var(--accent) 9%, transparent); }
 .tile.is-active .cicon { box-shadow: 0 0 0 2px var(--nav), 0 0 0 3px var(--accent); }
 .tile:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .tile.is-muted .cicon { opacity: .55; }
 .tile-dot { position: absolute; top: 4px; right: 4px; width: 7px; height: 7px; border-radius: 50%; background: var(--tx); box-shadow: 0 0 0 2px var(--nav); }
 .tile-ghost { border: 1px dashed color-mix(in srgb, var(--edge) 70%, transparent); color: var(--tx-2); }
-.strip-nudge { display: none !important; }
-@media (hover: hover) and (min-width: 860px) { .bar-mid:hover .strip-nudge { display: inline-grid !important; } }
+.strip-nudge { transition: opacity var(--med) var(--ease), width var(--med) var(--ease); }
+@media (hover: hover) and (min-width: 860px) {
+  .strip-nudge { width: 0; opacity: 0; overflow: hidden; pointer-events: none; }
+  .bar-mid:hover .strip-nudge, .bar-mid:focus-within .strip-nudge { width: var(--h-ibtn-sm); opacity: 1; pointer-events: auto; }
+}
 .bar-mid-actions { display: flex; gap: 4px; flex: none; padding-inline-start: var(--sp-2); border-inline-start: 1px solid var(--line); }
 .bar-mid-actions .ibtn { width: 36px; height: 36px; border: 1px solid var(--line); border-radius: var(--r-md); background: color-mix(in srgb, var(--raise) 55%, transparent); color: var(--tx-2); }
 .bar-mid-actions .ibtn:hover, .bar-mid-actions .ibtn.is-pressed { border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent) 10%, var(--raise)); color: var(--tx); }
 .audio { display: flex; align-items: center; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: var(--r-lg); background: color-mix(in srgb, var(--raise) 52%, transparent); }
 .audio .ibtn.tone-danger.is-pressed { background: var(--danger-soft); }
 .session { display: flex; align-items: center; gap: 2px; height: 36px; padding: 0 2px 0 4px; margin-inline-end: var(--sp-2); border-radius: var(--r-full); background: transparent; border: 0; }
-.session-id { display: flex; align-items: center; gap: var(--sp-2); height: 40px; padding: 0 var(--sp-2); border-radius: var(--r-sm); max-width: 220px; min-width: 0; }
+.session-id { display: flex; align-items: center; gap: var(--sp-2); height: 40px; padding: 0 var(--sp-2); border-radius: var(--r-sm); max-width: 220px; min-width: 0; transition: background var(--fast); }
 .session-id:hover { background: var(--hover); }
 .session-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
 .session-text b { font-size: var(--fs-small); font-weight: 600; color: var(--green); }
@@ -115,7 +117,7 @@ body.resizing { cursor: col-resize; user-select: none; }
 .side-sect { display: flex; align-items: center; gap: var(--sp-1); padding: 16px 8px 4px; min-height: 32px; }
 .cat-toggle { display: flex; align-items: center; gap: 4px; color: var(--tx-3); min-height: 28px; }
 .cat-toggle:hover .label { color: var(--tx); }
-.nav { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 36px; padding: 0 10px; border-radius: var(--r-sm); color: var(--tx-3); font-size: var(--fs-nav); font-weight: 400; }
+.nav { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 36px; padding: 0 10px; border-radius: var(--r-sm); color: var(--tx-3); font-size: var(--fs-nav); font-weight: 400; transition: background var(--fast), color var(--fast); }
 .nav.ch { min-height: 34px; gap: var(--sp-2); }
 .nav:hover { background: var(--hover); color: var(--tx); }
 .nav.is-active { background: var(--sel-fill); color: var(--tx); font-weight: 600; }
