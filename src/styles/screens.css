@@ -211,6 +211,25 @@
 .story-ring.is-empty { border: 2px dashed var(--edge); }
 .story-plus { box-shadow: 0 0 0 2px var(--raise); }
 .story-name { max-width: 68px; font-size: var(--fs-meta); }
+.story-add { width: 56px; height: 56px; }
+.main-inbox .page > .stories {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--line) 78%, var(--edge));
+  background: var(--raise);
+}
+.main-inbox .page > .stories::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 8% 0%, color-mix(in srgb, var(--green) 9%, transparent), transparent 56%),
+    radial-gradient(ellipse at 92% 0%, color-mix(in srgb, var(--tx) 5%, transparent), transparent 58%),
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--tx) 1.2%, transparent) 0 1px, transparent 1px 7px);
+}
 @media (max-width: 640px) {
   .story-compose { grid-template-columns: 1fr; justify-items: center; gap: var(--sp-4); }
   .story-frame { width: auto; height: min(30dvh, 240px); }
