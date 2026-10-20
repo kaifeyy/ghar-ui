@@ -2143,5 +2143,16 @@ const ar = {
   'Voice notes': 'رسائل صوتية',
   'Words, names or file names': 'كلمات أو أسماء أو أسماء ملفات',
   'You': 'أنت',
+  'Activity': 'الأنشطة',
+  'Community emoji': 'رموز المجتمع التعبيرية',
+  'Emoji categories': 'فئات الرموز التعبيرية',
+  'Emoji picker': 'منتقي الرموز التعبيرية',
+  'Food': 'الطعام',
+  'Nature': 'الطبيعة',
+  'No emoji found': 'لم يتم العثور على رموز تعبيرية',
+  'Objects': 'الأشياء',
+  'Search emoji': 'البحث عن رمز تعبيري',
+  'Symbols': 'الرموز',
+  'Travel': 'السفر',
 } satisfies Record<Key, string>;
 export default ar;

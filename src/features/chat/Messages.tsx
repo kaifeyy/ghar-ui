@@ -4,7 +4,7 @@ import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState, type React
 import { useShallow } from 'zustand/react/shallow';
 import { SmilePlus, Reply, MessagesSquare, MoreHorizontal, Pencil, Copy, Pin, Flag, Trash2, Download, Play, Pause, FileText, AlertCircle, Clock, RotateCw, X, CornerUpLeft, Link2, ShieldAlert, User, MessageSquare, Phone } from 'lucide-react';
 import type { Message } from '@/types/models';
-import { useApp, update } from '@/state/store';
+import { useApp, update, EMPTY } from '@/state/store';
 import { canManage } from '@/state/selectors';
 import { react, remove, retry, discardFailed, setReply, togglePin, openThread, type MsgKey, keyStr } from '@/state/actions/messages';
 import { openModal, go, toast } from '@/state/actions/ui';
@@ -18,10 +18,10 @@ import { Art } from '@/ui/Art';
 import { Markdown } from '@/ui/Markdown';
 import { Button, IconButton } from '@/ui/Button';
 import { Menu, useMenu, type MenuItem } from '@/ui/Overlay';
+import { EmojiPicker } from '@/ui/EmojiPicker';
 import { Tag } from '@/ui/Misc';
 import { ME, TITLES } from '@/fixtures/users';
 
-export const QUICK_REACTIONS = ['👍', '❤️', '😂', '🔥', '🎉', '😮', '😢', '🙏'];
 const PAGE = 50;
 
 export function RoleName({ userId, serverId }: { userId: string; serverId?: string }) {
@@ -98,6 +98,7 @@ const MessageRow = memo(function MessageRow({ k, m, grouped, serverId, canModera
   const t = useT();
   const menu = useMenu();
   const reactMenu = useMenu();
+  const customEmoji = useApp(s => (serverId ? s.servers[serverId]?.emoji ?? EMPTY : EMPTY));
   const [point, setPoint] = useState<{ x: number; y: number } | null>(null);
   const replyTarget = useApp(s => {
     if (!m.replyTo) return undefined;
@@ -165,11 +166,12 @@ const MessageRow = memo(function MessageRow({ k, m, grouped, serverId, canModera
           )}
           {Object.keys(m.reactions).length > 0 && (
             <div className="reacts">
-              {Object.entries(m.reactions).map(([e, users]) => (
-                <button key={e} type="button" className={`react ${users.includes(ME) ? 'is-mine' : ''}`} aria-pressed={users.includes(ME)} aria-label={t('{emoji} reaction, {n}', { emoji: e, n: users.length })} onClick={() => react(k, m.id, e)}>
-                  <span aria-hidden="true">{e}</span><span className="tnum">{users.length}</span>
-                </button>
-              ))}
+              {Object.entries(m.reactions).map(([e, users]) => {
+                const custom = customEmoji.find(x => `:${x.name}:` === e);
+                return <button key={e} type="button" className={`react ${users.includes(ME) ? 'is-mine' : ''}`} aria-pressed={users.includes(ME)} aria-label={t('{emoji} reaction, {n}', { emoji: e, n: users.length })} onClick={() => react(k, m.id, e)}>
+                  <span aria-hidden="true">{custom?.art.kind === 'glyph' ? custom.art.glyph : custom?.art.kind === 'local' ? <img className="react-emoji" src={custom.art.url} alt="" /> : e}</span><span className="tnum">{users.length}</span>
+                </button>;
+              })}
             </div>
           )}
           {thread && !inThread && (
@@ -181,7 +183,7 @@ const MessageRow = memo(function MessageRow({ k, m, grouped, serverId, canModera
         </div>
         {!readOnly && m.delivery === 'sent' && (
           <div className="mtools" role="toolbar" aria-label={t('Message actions')}>
-            <IconButton icon={SmilePlus} size="sm" label={t('Add reaction')} aria-haspopup="menu" onClick={e => reactMenu.open(e.currentTarget)} />
+            <IconButton icon={SmilePlus} size="sm" label={t('Add reaction')} aria-haspopup="dialog" aria-expanded={reactMenu.isOpen} onClick={e => reactMenu.open(e.currentTarget)} />
             <IconButton icon={Reply} size="sm" label={t('Reply')} onClick={() => setReply(k, m.id)} />
             {k.scope === 'channel' && !inThread && <IconButton icon={MessagesSquare} size="sm" label={thread ? t('Open thread') : t('Start a thread')} onClick={() => openThread(k.id, m.id)} />}
             <IconButton icon={MoreHorizontal} size="sm" label={t('More actions')} aria-haspopup="menu" onClick={e => menu.open(e.currentTarget)} />
@@ -189,7 +191,7 @@ const MessageRow = memo(function MessageRow({ k, m, grouped, serverId, canModera
         )}
       </div>
       {menu.isOpen && <Menu label={t('Message actions')} anchor={menu.anchor} point={point} onClose={() => { menu.close(); setPoint(null); }} items={items} />}
-      {reactMenu.isOpen && <Menu label={t('Add reaction')} anchor={reactMenu.anchor} onClose={reactMenu.close} items={QUICK_REACTIONS.map(e => ({ id: e, label: e, onSelect: () => react(k, m.id, e) }))} />}
+      {reactMenu.isOpen && <EmojiPicker open={reactMenu.isOpen} anchor={reactMenu.anchor} onClose={reactMenu.close} customEmoji={customEmoji} onSelect={selection => { if (selection.kind === 'unicode') react(k, m.id, selection.emoji); else if (selection.kind === 'custom') react(k, m.id, `:${selection.emoji.name}:`); }} />}
     </li>
   );
 });

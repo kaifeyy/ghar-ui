@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
-import { Plus, Smile, SendHorizontal, X, CornerUpLeft, Mic, Square, Paperclip, FileText, Sticker, Lock, Image as ImageIcon } from 'lucide-react';
+import { Plus, Smile, SendHorizontal, X, CornerUpLeft, Mic, Square, Paperclip, FileText, Lock } from 'lucide-react';
 import type { Attachment } from '@/types/models';
 import { useApp, EMPTY } from '@/state/store';
 import { send, setReply, keyStr, MAX_LEN, type MsgKey } from '@/state/actions/messages';
@@ -9,13 +9,12 @@ import { fold } from '@/domain/search';
 import { Avatar } from '@/ui/Avatar';
 import { IconButton } from '@/ui/Button';
 import { Menu, useMenu } from '@/ui/Overlay';
+import { EmojiPicker, type EmojiPickerSelection } from '@/ui/EmojiPicker';
 import { clock } from '@/domain/format';
 import { ME } from '@/fixtures/users';
 
 const IMG_MAX = 8 * 1024 * 1024;
 const FILE_MAX = 25 * 1024 * 1024;
-const EMOJI = ['😀', '😂', '🥲', '😍', '🤔', '😎', '🙏', '👍', '👏', '🔥', '💯', '🎉', '❤️', '💚', '☕', '🏏', '📚', '🌙'];
-
 interface Pending { att: Attachment; label: string }
 
 export interface ComposerProps { k: MsgKey; placeholder: string; serverId?: string; disabled?: { reason: string } | null; typing?: string[] }
@@ -65,6 +64,21 @@ export function Composer({ k, placeholder, serverId, disabled, typing = [] }: Co
     const before = draft.slice(0, pos).replace(/@[\w.]*$/, '@' + handle + ' ');
     setDraft(id, before + draft.slice(pos));
     requestAnimationFrame(() => { el.focus(); el.setSelectionRange(before.length, before.length); });
+  };
+
+  const pickEmoji = (selection: EmojiPickerSelection) => {
+    if (selection.kind === 'sticker') { send(k, '', [{ kind: 'sticker', id: selection.sticker.id }]); return; }
+    const el = ta.current;
+    const inserted = selection.kind === 'unicode' ? selection.emoji : `:${selection.emoji.name}: `;
+    const start = el?.selectionStart ?? draft.length;
+    const end = el?.selectionEnd ?? draft.length;
+    setDraft(id, draft.slice(0, start) + inserted + draft.slice(end));
+    requestAnimationFrame(() => {
+      if (!el) return;
+      el.focus();
+      const cursor = start + inserted.length;
+      el.setSelectionRange(cursor, cursor);
+    });
   };
 
   const submit = () => {
@@ -149,7 +163,7 @@ export function Composer({ k, placeholder, serverId, disabled, typing = [] }: Co
             <label className="sr" htmlFor={`ta-${listId}`}>{placeholder}</label>
             <textarea ref={ta} id={`ta-${listId}`} rows={1} dir="auto" value={draft} placeholder={placeholder} onChange={e => setDraft(id, e.target.value)} onKeyDown={onKey} enterKeyHint="send"
               role={mention ? 'combobox' : undefined} aria-expanded={mention ? true : undefined} aria-controls={mention ? listId : undefined} aria-activedescendant={mention ? `${listId}-${sugIdx}` : undefined} aria-autocomplete="list" />
-            <IconButton icon={Smile} label={t('Emoji and stickers')} aria-haspopup="menu" onClick={e => emojiMenu.open(e.currentTarget)} />
+            <IconButton icon={Smile} label={t('Emoji and stickers')} aria-haspopup="dialog" aria-expanded={emojiMenu.isOpen} onClick={e => emojiMenu.open(e.currentTarget)} />
             <IconButton icon={SendHorizontal} label={net === 'online' ? t('Send') : t('Send when back online')} className={`sendb flip ${ready ? 'is-ready' : ''}`} disabled={!ready} onClick={submit} />
           </>
         )}
@@ -160,12 +174,7 @@ export function Composer({ k, placeholder, serverId, disabled, typing = [] }: Co
         { id: 'file', label: t('Upload a file'), icon: <Paperclip size={16} />, hint: t('Images 8 MB · files 25 MB'), onSelect: () => file.current?.click() },
         { id: 'voice', label: t('Record a voice note'), icon: <Mic size={16} />, onSelect: () => { setRec(Date.now()); setRecNow(Date.now()); } },
       ]} />}
-      {emojiMenu.isOpen && <Menu label={t('Emoji and stickers')} anchor={emojiMenu.anchor} onClose={emojiMenu.close} items={[
-        ...emoji.map(e => ({ id: 'ce' + e.id, label: `:${e.name}:`, icon: <span aria-hidden="true">{e.art.kind === 'glyph' ? e.art.glyph : <ImageIcon size={16} />}</span>, onSelect: () => setDraft(id, (draft ? draft + ' ' : '') + `:${e.name}: `) })),
-        ...stickers.map(st => ({ id: 'st' + st.id, label: t('Sticker: {name}', { name: st.name }), icon: <Sticker size={16} />, onSelect: () => send(k, '', [{ kind: 'sticker', id: st.id }]) })),
-        ...(emoji.length || stickers.length ? ['sep' as const] : []),
-        ...EMOJI.map(e => ({ id: e, label: e, onSelect: () => { setDraft(id, draft + e); ta.current?.focus(); } })),
-      ]} />}
+      <EmojiPicker open={emojiMenu.isOpen} anchor={emojiMenu.anchor} onClose={emojiMenu.close} onSelect={pickEmoji} customEmoji={emoji} stickers={stickers} />
     </div>
   );
 }

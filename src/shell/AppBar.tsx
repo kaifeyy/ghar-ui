@@ -70,7 +70,7 @@ export function AppBar() {
                 <li key={sv!.id}>
                   <button type="button" className={`tile ${active ? 'is-active' : ''} ${count && !muted ? 'is-unread' : ''} ${muted ? 'is-muted' : ''}`} aria-current={active ? 'page' : undefined} aria-label={label} data-tip={sv!.name}
                     onClick={() => go({ name: 'channel', serverId: sv!.id, channelId: firstChannel(sv!.id) })}>
-                    <CommunityIcon id={sv!.id} name={sv!.name} color={sv!.color} style={sv!.bannerStyle} size={28} />
+                    <CommunityIcon id={sv!.id} name={sv!.name} color={sv!.color} style={sv!.bannerStyle} size={32} />
                     {mention > 0 ? <span className="tile-badge tnum" aria-hidden="true">{mention}</span> : count > 0 && !muted ? <span className="tile-dot" aria-hidden="true" /> : null}
                   </button>
                 </li>
