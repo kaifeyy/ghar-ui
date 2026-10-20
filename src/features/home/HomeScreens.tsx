@@ -114,7 +114,7 @@ export function Friends({ tab }: { tab: FriendsTab }) {
         <AddFriend />
         <Tabs tabs={tabs} value={tab} onChange={v => go({ name: 'friends', tab: v }, { replace: true })} label={t('Friends')} idBase="friends" className="tabs-line" />
         <TabPanel idBase="friends" value={tab}>
-          {(tab === 'online' || tab === 'all') && <TextField label={t('Search friends and people')} srLabel icon={Search} placeholder={t('Search friends and people')} value={q} onChange={e => setQ(e.target.value)} className="mt16" />}
+          {(tab === 'online' || tab === 'all') && <TextField label={t('Search friends and people')} srLabel icon={Search} placeholder={t('Search friends and people')} value={q} onChange={e => setQ(e.target.value)} className="mt16 friends-search" />}
           {tab === 'online' && (filt(online).length ? <ul className="flist">{filt(online).map(id => <FriendRow key={id} id={id} kind="friend" />)}</ul> : <Empty icon={Users} title={t('No friends online')}>{t('Friends who are online or idle show here.')}</Empty>)}
           {tab === 'all' && <><p className="meta mt8">{t('Sorted by last seen. People who hide their last seen show as hidden.')}</p><ul className="flist">{filt(all).map(id => <FriendRow key={id} id={id} kind="friend" />)}</ul></>}
           {(tab === 'online' || tab === 'all') && people.length > 0 && <><h3 className="label mt24">{t('Other people')}</h3><ul className="flist">{people.slice(0, 10).map(u => <FriendRow key={u.id} id={u.id} kind="search" />)}</ul></>}
@@ -236,7 +236,7 @@ export function Communities() {
             </li>
           ); })}
         </ul>
-        <div className="row g8 wrap mt24">
+        <div className="row g8 wrap mt24 community-actions">
           <Button icon={Compass} onClick={() => go({ name: 'discover', cat: 'all' })}>{t('Discover communities')}</Button>
           <Button icon={FileText} onClick={() => openModal({ kind: 'apply' })}>{t('Apply for a server')}</Button>
           <Button icon={UserPlus} onClick={() => openModal({ kind: 'joinInvite' })}>{t('Join with an invite')}</Button>

@@ -98,7 +98,7 @@ export function Shell() {
             {!phone && <Resizer which="side" />}
           </>
         )}
-        <main id="main" className="main" tabIndex={-1}>
+        <main id="main" className={`main main-${route.name}`} tabIndex={-1}>
           <MainView />
         </main>
         {hasRight && (
