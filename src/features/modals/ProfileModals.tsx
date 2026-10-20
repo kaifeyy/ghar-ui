@@ -83,11 +83,11 @@ export function PostStoryModal() {
     closeModal();
   };
   return (
-    <Dialog title={t('Post a story')} description={t('Images only. It disappears after 24 hours unless you add it to a highlight.')} onClose={closeModal} onSubmit={submit} size="lg"
+    <Dialog title={t('Post a story')} description={t('Images only. It disappears after 24 hours unless you add it to a highlight.')} onClose={closeModal} onSubmit={submit} size="lg" className="story-post-dlg"
       footer={<><Button onClick={closeModal}>{t('Cancel')}</Button><Button type="submit" variant="primary" disabled={!url}>{t('Share story')}</Button></>}>
       <div className="story-compose">
         <div className="story-frame">
-          {url ? <img src={url} alt={t('Your chosen photo')} /> : <Art seed="empty-story" color="#5E6470" style="fun" w={270} h={480} />}
+          {url ? <img src={url} alt={t('Your chosen photo')} /> : <div className="story-empty-prompt"><ImagePlus size={26} aria-hidden="true" /><span>{t('Choose photo')}</span></div>}
           {caption && <span className="story-cap">{caption}</span>}
         </div>
         <div className="col g12 grow">
@@ -99,7 +99,7 @@ export function PostStoryModal() {
           <p className="meta">{t('PNG, JPEG or WebP up to 8 MB. Your photo stays in this browser tab and is never uploaded.')}</p>
           {err && <p className="ferr" role="alert">{err}</p>}
           <TextField label={t('Caption (optional)')} value={caption} onChange={e => setCaption(e.target.value)} maxLength={80} />
-          <AudienceFields {...{ audience, setAudience, custom, setCustom, hidden, setHidden }} />
+          <section className="story-privacy"><h3>{t('Privacy')}</h3><AudienceFields {...{ audience, setAudience, custom, setCustom, hidden, setHidden }} /></section>
         </div>
       </div>
     </Dialog>

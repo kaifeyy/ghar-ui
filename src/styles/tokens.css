@@ -42,7 +42,7 @@
   --bubble-me: #292929; --bubble-them: #171717;
   --sel-fill: #292929;
   --glow: none;
-  --shadow-pop: 0 18px 42px rgba(0, 0, 0, .46), 0 0 0 1px rgba(255, 255, 255, .04);
+  --shadow-pop: 0 12px 30px rgba(0, 0, 0, .32), 0 0 0 1px rgba(255, 255, 255, .035);
   --scrim: rgba(4, 5, 8, .68);
   color-scheme: dark;
 }
@@ -62,7 +62,7 @@
   --bubble-me: #E8E7E4; --bubble-them: #F6F5F2;
   --sel-fill: #E8E7E4;
   --glow: none;
-  --shadow-pop: 0 16px 36px rgba(20, 20, 20, .12), 0 0 0 1px rgba(20, 20, 20, .06);
+  --shadow-pop: 0 10px 26px rgba(20, 20, 20, .12), 0 0 0 1px rgba(20, 20, 20, .05);
   --scrim: rgba(20, 24, 31, .42);
   color-scheme: light;
 }
