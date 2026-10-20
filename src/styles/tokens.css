@@ -1,0 +1,81 @@
+/* ================================================================
+   Ghar tokens — near-black, cool, hairline elevation. Green is occasional:
+   presence, speaking, success, a mention of you. Cyan is a thin active mark only.
+   ================================================================ */
+:root {
+  /* layout */
+  --bar-h: 56px; --side-w: 280px; --right-w: 272px; --thread-w: 380px; --hdr-h: 52px; --tab-h: 56px;
+  --page-w: 840px; --read-w: 880px; --hub-w: 368px;
+
+  /* spacing 4/8/12/16/24/32/48 */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;
+
+  /* type */
+  --fs-meta: 12px; --fs-small: 13px; --fs-nav: 13.5px; --fs-body: 14.5px; --fs-msg: 15px; --fs-lead: 15.5px;
+  --fs-conv: 18px; --fs-section: 18px; --fs-page: 24px;
+  --lh-tight: 1.25; --lh-body: 1.5; --lh-msg: 1.55;
+
+  /* controls */
+  --h-ctl: 36px; --h-ctl-sm: 30px; --h-row: 40px; --h-ibtn: 34px; --h-ibtn-sm: 30px; --h-touch: 44px;
+
+  /* radii */
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-full: 999px;
+
+  --ease: cubic-bezier(.2, 0, 0, 1); --fast: .12s; --med: .18s;
+
+  --sans: "IBM Plex Sans", "IBM Plex Sans Arabic", "IBM Plex Sans Devanagari", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --nastaliq: "Noto Nastaliq Urdu", "IBM Plex Sans Arabic", serif;
+
+  /* dark (default) */
+  --canvas: #08090C; --nav: #07080B; --main: #0A0B0F; --raise: #12141A; --hover: #181B22; --sel: #22262F; --well: #0C0D12;
+  --line: #1A1D26; --edge: #6B7382;
+  --tx: #F2F3F5; --tx-2: #B8BDC8; --tx-3: #9AA1AE;
+  --pri: #F2F3F5; --pri-ink: #111215; --pri-hover: #FFFFFF;
+  --green: #3CCB91; --green-soft: rgba(60, 203, 145, .14); --green-ink: #062A1C;
+  --idle: #E5B454; --dnd: #F07878; --offline: #949BA8;
+  --danger: #F07878; --danger-soft: rgba(240, 120, 120, .13); --danger-fill: #D94848; --danger-ink: #FFFFFF;
+  --amber: #E5B454; --amber-soft: rgba(229, 180, 84, .13);
+  --info: #9CC3F5;
+  --focus: #DCE1EA;
+  --accent: #5EC8D6;
+  --mention-bg: rgba(60, 203, 145, .10);
+  --bubble-me: #22262F; --bubble-them: #12141A;
+  --sel-fill: linear-gradient(90deg, rgba(180, 186, 198, .14) 0%, rgba(80, 86, 98, .08) 100%);
+  --glow: radial-gradient(900px 480px at 78% -8%, rgba(94, 200, 214, .07), transparent 52%),
+          radial-gradient(700px 420px at 8% 108%, rgba(90, 110, 150, .05), transparent 48%);
+  --shadow-pop: 0 16px 40px rgba(0, 0, 0, .5);
+  --scrim: rgba(4, 5, 8, .68);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --canvas: #ECEEF1; --nav: #F5F6F8; --main: #FFFFFF; --raise: #FFFFFF; --hover: #F0F1F4; --sel: #E4E6EB; --well: #F5F6F8;
+  --line: #E1E3E8; --edge: #6B7280;
+  --tx: #15171A; --tx-2: #474C55; --tx-3: #5E6470;
+  --pri: #15171A; --pri-ink: #FFFFFF; --pri-hover: #000000;
+  --green: #0B7A50; --green-soft: rgba(11, 122, 80, .1); --green-ink: #FFFFFF;
+  --idle: #9A6200; --dnd: #C42B2B; --offline: #6B7280;
+  --danger: #C42B2B; --danger-soft: rgba(196, 43, 43, .08); --danger-fill: #C42B2B; --danger-ink: #FFFFFF;
+  --amber: #8A5800; --amber-soft: rgba(154, 98, 0, .1);
+  --info: #1D5FB0;
+  --focus: #1F2328;
+  --accent: #0F766E;
+  --mention-bg: rgba(11, 122, 80, .08);
+  --bubble-me: #E4E6EB; --bubble-them: #F0F1F4;
+  --sel-fill: linear-gradient(90deg, rgba(20, 24, 31, .08) 0%, rgba(20, 24, 31, .04) 100%);
+  --glow: none;
+  --shadow-pop: 0 12px 32px rgba(20, 24, 31, .14), 0 0 0 1px rgba(20, 24, 31, .06);
+  --scrim: rgba(20, 24, 31, .42);
+  color-scheme: light;
+}
+/* paid dark skins — only alter surfaces, never contrast-critical text */
+:root[data-skin="th-lahore"]:not([data-theme="light"]) { --canvas: #09080C; --nav: #08070B; --main: #0C0B10; --raise: #15131C; --hover: #1C1924; --sel: #262230; }
+:root[data-skin="th-monsoon"]:not([data-theme="light"]) { --canvas: #070A0E; --nav: #06090C; --main: #090D12; --raise: #111820; --hover: #182028; --sel: #222B35; }
+
+:root[data-text="large"] {
+  --fs-meta: 14px; --fs-small: 15px; --fs-nav: 16px; --fs-body: 17px; --fs-msg: 17.5px; --fs-lead: 18px; --fs-conv: 20px; --fs-section: 22px; --fs-page: 28px;
+  --h-row: 50px; --h-ctl: 46px;
+}
+@media (pointer: coarse) {
+  :root { --h-ibtn: 44px; --h-ctl: 44px; --h-row: 48px; }
+}
