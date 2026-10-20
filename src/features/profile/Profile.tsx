@@ -1,7 +1,7 @@
 import { SocialChips } from '@/features/social/SocialLinks';
 import { useShallow } from 'zustand/react/shallow';
 import { useMemo } from 'react';
-import { X, MapPin, MessageSquare, Phone, UserPlus, UserMinus, Ban, Flag, Gift, CircleDollarSign, Pencil, Music, Flame, Play, Home, Code, ShieldCheck, FlaskConical, CalendarDays, Video, Lightbulb, Link2, Clock, Eye, Plus, LogIn } from 'lucide-react';
+import { X, MapPin, MessageSquare, Phone, UserPlus, UserMinus, Ban, Flag, Gift, CircleDollarSign, Pencil, Music, Flame, Play, Plus, LogIn } from 'lucide-react';
 import { useApp } from '@/state/store';
 import { usePresence } from '@/state/selectors';
 import { go, openModal } from '@/state/actions/ui';
@@ -22,24 +22,9 @@ import { BoostedTag } from '@/features/popularity/PopularityPage';
 import { REL_LABEL } from '@/features/home/HomeScreens';
 import { OTHER_RELATIONSHIPS } from '@/fixtures/social';
 import { ME, TITLES } from '@/fixtures/users';
+import { Badges } from './Badges';
 
 const NO_MEDIA: { avatar?: string; banner?: string } = {};
-const BADGE_ICON: Record<string, typeof Home> = { home: Home, code: Code, 'shield-check': ShieldCheck, flask: FlaskConical, calendar: CalendarDays, video: Video, lightbulb: Lightbulb, link: Link2, clock: Clock, eye: Eye };
-
-export function Badges({ ids, staffView = false }: { ids: string[]; staffView?: boolean }) {
-  const catalog = useApp(s => s.badgeCatalog);
-  const list = ids.map(id => catalog.find(b => b.id === id)).filter(b => b && (!b.staffOnly || staffView));
-  if (!list.length) return null;
-  return (
-    <ul className="badges">
-      {list.map(b => { const I = BADGE_ICON[b!.icon] ?? ShieldCheck; return (
-        <li key={b!.id} className={`badge ${b!.animated ? 'is-animated' : ''}`} data-tip={b!.description} tabIndex={0} aria-label={`${b!.name}: ${b!.description}`}>
-          <I size={14} aria-hidden="true" /><span>{b!.name}</span>
-        </li>
-      ); })}
-    </ul>
-  );
-}
 
 export function Profile({ userId }: { userId: string }) {
   const t = useT();
@@ -83,10 +68,13 @@ export function Profile({ userId }: { userId: string }) {
           <div className="phead">
             <button type="button" className={`pav ${activeStories.length ? 'has-story' : ''}`} onClick={() => (activeStories.length ? openStories(userId) : isMe ? openModal({ kind: 'profileMedia', which: 'avatar' }) : undefined)}
               aria-label={activeStories.length ? t('View {name}’s story', { name: u.name }) : isMe ? t('Change profile picture') : u.name} disabled={!activeStories.length && !isMe}>
-              <Avatar userId={userId} size={112} showPresence />
+              <Avatar userId={userId} size={88} showPresence />
             </button>
             <div className="pname">
-              <h2 dir="auto">{u.name}{showFlag && u.flag && <span className="flag" title={u.flag} aria-label={t('Flag: {f}', { f: u.flag })}>{u.flag === 'PK' ? <Flag size={18} aria-hidden="true" /> : <MapPin size={18} aria-hidden="true" />}</span>}</h2>
+              <div className="pidentity">
+                <h2 dir="auto">{u.name}{showFlag && u.flag && <span className="flag" title={u.flag} aria-label={t('Flag: {f}', { f: u.flag })}>{u.flag === 'PK' ? <Flag size={18} aria-hidden="true" /> : <MapPin size={18} aria-hidden="true" />}</span>}</h2>
+                <Badges ids={u.badges} />
+              </div>
               <p className="row g8 wrap"><span className="meta ltr">@{u.handle}</span>{title && <Tag>{title}</Tag>}{u.bot && <Tag tone="outline">{t('Bot')}</Tag>}</p>
               <p className="row g8 wrap small"><PresenceLabel kind={presence} />{u.activity && <span className="muted">· {t(({ studying: msg('Studying {x}'), listening: msg('Listening to {x}'), playing: msg('Playing {x}'), hosting: msg('Hosting {x}'), coding: msg('Coding {x}') } as const)[u.activity.kind], { x: u.activity.label })}{u.activity.with?.length ? ' ' + t('with {names}', { names: u.activity.with.map(w => useApp.getState().users[w]?.name.split(' ')[0]).join(', ') }) : ''}</span>}
                 {u.activity?.join && <Button size="sm" icon={LogIn} onClick={() => go({ name: 'channel', serverId: u.activity!.join!.serverId, channelId: u.activity!.join!.channelId })}>{t('Join')}</Button>}</p>
@@ -103,7 +91,6 @@ export function Profile({ userId }: { userId: string }) {
             </div>
           </div>
           <div className="pbody">
-            <Badges ids={u.badges} />
             {u.bio && <p className="bio plain" dir="auto">{u.bio}</p>}
             {suspended && <Note tone="warn" title={t('Account suspended')}>{t('This account is suspended by the Ghar team and can’t post or message right now.')}</Note>}
             <SocialChips owner={userId} />

@@ -8,16 +8,16 @@ export const ago = (ms: number) => BOOT - ms;
 export const ME = 'me';
 
 export const BADGES: Badge[] = [
-  { id: 'team', name: 'Ghar Team', description: 'Member of the main Ghar development team.', icon: 'home' },
-  { id: 'dev', name: 'Verified Developer', description: 'Developer verified by the Ghar team.', icon: 'code' },
-  { id: 'mod', name: 'Certified Moderator', description: 'Passed the moderation qualification and staff review.', icon: 'shield-check' },
-  { id: 'beta', name: 'Beta Tester', description: 'Tested Ghar before launch.', icon: 'flask' },
-  { id: 'organizer', name: 'Verified Event Organizer', description: 'Hosts events on Ghar’s behalf.', icon: 'calendar' },
-  { id: 'creator', name: 'Creator Program Member', description: 'Content creator on other platforms.', icon: 'video' },
-  { id: 'advisor', name: 'Community Advisor', description: 'Expert new users can ask for advice.', icon: 'lightbulb' },
-  { id: 'affiliate', name: 'Community Affiliate', description: 'Owner of a large, well-run community, or a sponsor.', icon: 'link' },
-  { id: 'early', name: 'Early Recognizer', description: 'Joined in the first six months after launch.', icon: 'clock', animated: true },
-  { id: 'undercover', name: 'Platform Safety', description: 'Staff-only marker on decoy accounts. Never shown to users.', icon: 'eye', staffOnly: true },
+  { id: 'team', name: 'Netspice Team', description: 'Member of the main head developer team.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2Fd33ab1e475444c1989285303f564bd1a?format=webp&width=800&height=1200' },
+  { id: 'dev', name: 'Verified Developer', description: 'A developer recognized by the Netspice team.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2Fed2df97eb60f47e68606960874fa3441?format=webp&width=800&height=1200' },
+  { id: 'mod', name: 'Certified Moderator', description: 'Awarded after passing the platform’s assessed moderation qualification.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2F864806c9e8ef4bc69a8741928c35cbe4?format=webp&width=800&height=1200' },
+  { id: 'beta', name: 'Beta Tester', description: 'Assigned to users who test the platform before production.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2F17bb3ea2cdd745599b25b722b9e4f55e?format=webp&width=800&height=1200' },
+  { id: 'organizer', name: 'Verified Event Organizer', description: 'Recognizes organizers who host events on the platform’s behalf.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2Ff30fc5528a614989a38a1b460119f778?format=webp&width=800&height=1200' },
+  { id: 'creator', name: 'Creator Program Member', description: 'Recognizes creators who publish content on other platforms.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2F1e57b5495b824df299e257e8bf1eb0f8?format=webp&width=800&height=1200' },
+  { id: 'advisor', name: 'Community Advisor', description: 'A knowledgeable community member new users can ask for advice.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2F4b0a2e77a30848e1b0ca3b08ebaded1e?format=webp&width=800&height=1200' },
+  { id: 'affiliate', name: 'Community Affiliate', description: 'Recognizes a thriving server community or a platform sponsor.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2Fd571477a3a4a454abbac127ebf57a47e?format=webp&width=800&height=1200' },
+  { id: 'early', name: 'Early Recognizer', description: 'Awarded to users who create an account during the first six months of production.', image: 'https://cdn.builder.io/api/v1/image/assets%2F7fa41e79184d4deb97b5ed88958c7cfc%2F573b1b77625942428a71afd6dd52c958?format=webp&width=800&height=1200', animated: true },
+  { id: 'undercover', name: 'Platform Safety', description: 'Staff-only marker on decoy accounts. Never shown to users.', staffOnly: true },
 ];
 
 export const TITLES: Title[] = [
@@ -34,14 +34,14 @@ const u = (o: Omit<User, 'badges'> & { badges?: User['badges'] }): User => ({ ba
 export const USERS: User[] = [
   u({ id: ME, name: 'Kaif', handle: 'kaif', color: '#3CCB91', presence: 'online', titleId: 'night-owl', badges: ['team', 'beta', 'early'], bio: 'Building Ghar. Chai over coffee, always.', city: 'Lahore', song: 'Shehar ki Raat', joinedAt: '2026-01-02', flag: 'PK' }),
   u({ id: 'ayesha', name: 'Ayesha Khan', handle: 'ayesha.k', color: '#F2667A', presence: 'online', activity: { kind: 'studying', label: 'Chemistry', since: ago(2 * HOUR), join: { serverId: 'fp', channelId: 'fp-focus' } }, titleId: 'night-owl', badges: ['mod', 'beta', 'early'], bio: 'Pre-med, Lahore. MDCAT 2026. Usually in Study Room after Isha.', city: 'Lahore', song: 'Shehar ki Raat', joinedAt: '2026-03-14', flag: 'PK' }),
-  u({ id: 'hamza', name: 'Hamza Qureshi', handle: 'hamza.q', color: '#5AA9F5', presence: 'online', activity: { kind: 'playing', label: 'Valorant', with: ['usman'] }, titleId: 'study-machine', badges: ['early'], bio: 'Physics nerd. Valorant after 11.', city: 'Karachi', joinedAt: '2026-04-02' }),
-  u({ id: 'zainab', name: 'Zainab Raza', handle: 'zainab.r', color: '#A78BFA', presence: 'dnd', activity: { kind: 'studying', label: 'MDCAT' }, titleId: 'shayar', badges: ['organizer'], bio: 'Shayari, chai, and too many tabs open.', city: 'Islamabad', joinedAt: '2026-02-20', flag: 'Islamabad' }),
+  u({ id: 'hamza', name: 'Hamza Qureshi', handle: 'hamza.q', color: '#5AA9F5', presence: 'online', activity: { kind: 'playing', label: 'Valorant', with: ['usman'] }, titleId: 'study-machine', badges: ['early', 'beta'], bio: 'Physics nerd. Valorant after 11.', city: 'Karachi', joinedAt: '2026-04-02' }),
+  u({ id: 'zainab', name: 'Zainab Raza', handle: 'zainab.r', color: '#A78BFA', presence: 'dnd', activity: { kind: 'studying', label: 'MDCAT' }, titleId: 'shayar', badges: ['organizer', 'creator'], bio: 'Shayari, chai, and too many tabs open.', city: 'Islamabad', joinedAt: '2026-02-20', flag: 'Islamabad' }),
   u({ id: 'bilal', name: 'Bilal Ahmed', handle: 'bilal', color: '#F5B544', presence: 'online', activity: { kind: 'hosting', label: 'Friday Open Mic', join: { serverId: 'tc', channelId: 'tc-mic' } }, titleId: 'host', badges: ['affiliate', 'organizer', 'team'], bio: 'Owner of The Club. Open mic every Friday.', city: 'Lahore', joinedAt: '2026-01-02' }),
-  u({ id: 'usman', name: 'Usman Tariq', handle: 'usman.t', color: '#2DD4BF', presence: 'idle', bio: 'Multan. Load-shedding survivor.', city: 'Multan', joinedAt: '2026-06-09' }),
+  u({ id: 'usman', name: 'Usman Tariq', handle: 'usman.t', color: '#2DD4BF', presence: 'idle', badges: ['affiliate', 'beta'], bio: 'Multan. Load-shedding survivor.', city: 'Multan', joinedAt: '2026-06-09' }),
   u({ id: 'fatima', name: 'Fatima Malik', handle: 'fatima.m', color: '#FB923C', presence: 'online', activity: { kind: 'listening', label: 'Shehar ki Raat' }, badges: ['creator'], bio: 'Notes queen. Ask me for chapter 6.', city: 'Lahore', joinedAt: '2026-05-01' }),
   u({ id: 'ali', name: 'Ali Haider', handle: 'ali.h', color: '#E879F9', presence: 'online', activity: { kind: 'coding', label: 'a side project' }, badges: ['dev'], bio: 'Builds bots. Made Quiz Bot.', city: 'Karachi', joinedAt: '2026-01-11' }),
-  u({ id: 'sana', name: 'Sana Javed', handle: 'sana.j', color: '#38BDF8', presence: 'online', bio: 'React dev, Karachi.', city: 'Karachi', joinedAt: '2026-10-15' }),
-  u({ id: 'omar', name: 'Omar Farooq', handle: 'omar.f', color: '#FACC15', presence: 'offline', lastSeenAt: ago(26 * HOUR), city: 'Karachi', joinedAt: '2026-03-03' }),
+  u({ id: 'sana', name: 'Sana Javed', handle: 'sana.j', color: '#38BDF8', presence: 'online', badges: ['dev', 'beta'], bio: 'React dev, Karachi.', city: 'Karachi', joinedAt: '2026-10-15' }),
+  u({ id: 'omar', name: 'Omar Farooq', handle: 'omar.f', color: '#FACC15', presence: 'offline', lastSeenAt: ago(26 * HOUR), badges: ['creator', 'early'], city: 'Karachi', joinedAt: '2026-03-03' }),
   u({ id: 'danish', name: 'Danish Iqbal', handle: 'danish.i', color: '#34D399', presence: 'offline', lastSeenAt: ago(2 * HOUR), city: 'Peshawar', joinedAt: '2026-08-08' }),
   u({ id: 'hira', name: 'Hira Siddiqui', handle: 'hira.s', color: '#FB7185', presence: 'online', activity: { kind: 'studying', label: 'Chemistry', since: ago(48 * MIN) }, titleId: 'study-machine', city: 'Multan', joinedAt: '2026-02-06' }),
   u({ id: 'sara', name: 'Dr. Sara Malik', handle: 'dr.sara', color: '#4ADE80', presence: 'online', badges: ['advisor', 'mod'], bio: 'Psychiatrist. AMA on exam stress tonight.', city: 'Lahore', joinedAt: '2026-02-01' }),
