@@ -35,6 +35,7 @@ export function StoriesRow() {
   const mine = stories.filter(s => s.owner === ME && s.expiresAt > now);
   return (
     <section className="stories" aria-label={t('Stories')}>
+      <div className="stories-head"><h2>{t('Stories')}</h2><Button size="sm" icon={Plus} onClick={() => openModal({ kind: 'postStory' })}>{t('Add a story')}</Button></div>
       <ul className="stories-row">
         <li>
           <button type="button" className="story-bubble" onClick={() => (mine.length ? openStories(ME) : openModal({ kind: 'postStory' }))} aria-label={mine.length ? t('View your story') : t('Add a story')}>
