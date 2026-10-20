@@ -34,7 +34,6 @@ function BadgeItem({ badge, size }: { badge: Badge; size: 'regular' | 'compact' 
     <li ref={trigger} className={`badge ${badge.animated ? 'is-animated' : ''}`} tabIndex={0} aria-label={`${badge.name}: ${badge.description}`} aria-describedby={open ? `badge-${badge.id}` : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
       <span className="badge-icon">{badge.image ? <img src={badge.image} alt="" /> : <span aria-hidden="true">✦</span>}</span>
-      <span className="badge-name">{badge.name}</span>
       {open && createPortal(
         <span ref={card} id={`badge-${badge.id}`} className={`badge-card badge-card-${size}`} role="tooltip" style={position}>
           <span className="badge-card-icon">{badge.image ? <img src={badge.image} alt="" /> : <span aria-hidden="true">✦</span>}</span>

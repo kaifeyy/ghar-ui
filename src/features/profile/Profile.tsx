@@ -68,10 +68,13 @@ export function Profile({ userId }: { userId: string }) {
           <div className="phead">
             <button type="button" className={`pav ${activeStories.length ? 'has-story' : ''}`} onClick={() => (activeStories.length ? openStories(userId) : isMe ? openModal({ kind: 'profileMedia', which: 'avatar' }) : undefined)}
               aria-label={activeStories.length ? t('View {name}’s story', { name: u.name }) : isMe ? t('Change profile picture') : u.name} disabled={!activeStories.length && !isMe}>
-              <Avatar userId={userId} size={112} showPresence />
+              <Avatar userId={userId} size={88} showPresence />
             </button>
             <div className="pname">
-              <h2 dir="auto">{u.name}{showFlag && u.flag && <span className="flag" title={u.flag} aria-label={t('Flag: {f}', { f: u.flag })}>{u.flag === 'PK' ? <Flag size={18} aria-hidden="true" /> : <MapPin size={18} aria-hidden="true" />}</span>}</h2>
+              <div className="pidentity">
+                <h2 dir="auto">{u.name}{showFlag && u.flag && <span className="flag" title={u.flag} aria-label={t('Flag: {f}', { f: u.flag })}>{u.flag === 'PK' ? <Flag size={18} aria-hidden="true" /> : <MapPin size={18} aria-hidden="true" />}</span>}</h2>
+                <Badges ids={u.badges} />
+              </div>
               <p className="row g8 wrap"><span className="meta ltr">@{u.handle}</span>{title && <Tag>{title}</Tag>}{u.bot && <Tag tone="outline">{t('Bot')}</Tag>}</p>
               <p className="row g8 wrap small"><PresenceLabel kind={presence} />{u.activity && <span className="muted">· {t(({ studying: msg('Studying {x}'), listening: msg('Listening to {x}'), playing: msg('Playing {x}'), hosting: msg('Hosting {x}'), coding: msg('Coding {x}') } as const)[u.activity.kind], { x: u.activity.label })}{u.activity.with?.length ? ' ' + t('with {names}', { names: u.activity.with.map(w => useApp.getState().users[w]?.name.split(' ')[0]).join(', ') }) : ''}</span>}
                 {u.activity?.join && <Button size="sm" icon={LogIn} onClick={() => go({ name: 'channel', serverId: u.activity!.join!.serverId, channelId: u.activity!.join!.channelId })}>{t('Join')}</Button>}</p>
@@ -88,7 +91,6 @@ export function Profile({ userId }: { userId: string }) {
             </div>
           </div>
           <div className="pbody">
-            <Badges ids={u.badges} />
             {u.bio && <p className="bio plain" dir="auto">{u.bio}</p>}
             {suspended && <Note tone="warn" title={t('Account suspended')}>{t('This account is suspended by the Ghar team and can’t post or message right now.')}</Note>}
             <SocialChips owner={userId} />
