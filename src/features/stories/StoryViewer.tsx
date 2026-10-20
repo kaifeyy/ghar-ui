@@ -72,7 +72,7 @@ function Viewer({ owner, index, highlightId }: { owner: string; index: number; h
           <IconButton icon={X} label={t('Close')} onClick={closeStories} className="on-dark" />
         </header>
         <figure className="story-img">
-          {st.image.kind === 'local' ? <img src={st.image.url} alt={st.image.caption || t('Story photo')} /> : <Art seed={st.image.seed} color={st.image.color} style="fun" w={540} h={960} />}
+          {st.image.kind === 'local' ? <img key={st.id} src={st.image.url} alt={st.image.caption || t('Story photo')} /> : <Art key={st.id} seed={st.image.seed} color={st.image.color} style="fun" w={540} h={960} />}
           {st.image.caption && <figcaption className="story-cap">{st.image.caption}</figcaption>}
         </figure>
         <button type="button" className="story-nav prev" aria-label={t('Previous story')} onClick={() => storyStep(-1)} disabled={index === 0}><ChevronLeft size={28} aria-hidden="true" className="flip" /></button>
