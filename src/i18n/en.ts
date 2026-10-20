@@ -2141,5 +2141,16 @@ const en = {
   'Your study time today: {time} (sample)': 'Your study time today: {time} (sample)',
   'Your titles': 'Your titles',
   'Your year on Ghar': 'Your year on Ghar',
+  'Activity': 'Activity',
+  'Community emoji': 'Community emoji',
+  'Emoji categories': 'Emoji categories',
+  'Emoji picker': 'Emoji picker',
+  'Food': 'Food',
+  'Nature': 'Nature',
+  'No emoji found': 'No emoji found',
+  'Objects': 'Objects',
+  'Search emoji': 'Search emoji',
+  'Symbols': 'Symbols',
+  'Travel': 'Travel',
 } as const;
 export default en;

@@ -2143,5 +2143,16 @@ const ur = {
   'Voice notes': 'وائس نوٹس',
   'Words, names or file names': 'الفاظ، نام یا فائل کے نام',
   'You': 'آپ',
+  'Activity': 'سرگرمی',
+  'Community emoji': 'کمیونٹی ایموجی',
+  'Emoji categories': 'ایموجی کی اقسام',
+  'Emoji picker': 'ایموجی منتخب کریں',
+  'Food': 'کھانا',
+  'Nature': 'فطرت',
+  'No emoji found': 'کوئی ایموجی نہیں ملا',
+  'Objects': 'اشیا',
+  'Search emoji': 'ایموجی تلاش کریں',
+  'Symbols': 'علامتیں',
+  'Travel': 'سفر',
 } satisfies Record<Key, string>;
 export default ur;

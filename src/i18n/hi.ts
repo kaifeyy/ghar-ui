@@ -2143,5 +2143,16 @@ const hi = {
   'Voice notes': 'वॉइस नोट',
   'Words, names or file names': 'शब्द, नाम या फ़ाइल के नाम',
   'You': 'आप',
+  'Activity': 'गतिविधि',
+  'Community emoji': 'कम्युनिटी इमोजी',
+  'Emoji categories': 'इमोजी श्रेणियाँ',
+  'Emoji picker': 'इमोजी चुनें',
+  'Food': 'खाना',
+  'Nature': 'प्रकृति',
+  'No emoji found': 'कोई इमोजी नहीं मिला',
+  'Objects': 'वस्तुएँ',
+  'Search emoji': 'इमोजी खोजें',
+  'Symbols': 'प्रतीक',
+  'Travel': 'यात्रा',
 } satisfies Record<Key, string>;
 export default hi;

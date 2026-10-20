@@ -252,6 +252,22 @@
 .menu-check { width: 16px; display: inline-flex; color: var(--tx); }
 .menu[popover] { inset: auto; margin: 0; color: var(--tx); }
 .menu[popover]:not(:popover-open) { display: block; }
+.emoji-picker, .emoji-picker:popover-open, .emoji-picker[popover]:not(:popover-open):not([hidden]) { position: fixed; inset: auto; margin: 0; display: flex; flex-direction: column; gap: var(--sp-2); width: min(360px, calc(100vw - 16px)); max-height: min(440px, calc(100dvh - 16px)); padding: var(--sp-2); color: var(--tx); }
+.emoji-picker-search { min-height: 38px; flex: none; }
+.emoji-picker-search input { height: 36px; }
+.emoji-tabs { display: flex; gap: 2px; overflow-x: auto; flex: none; scrollbar-width: thin; }
+.emoji-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 34px; padding: 0 9px; border-radius: var(--r-sm); color: var(--tx-3); font-size: 12px; white-space: nowrap; transition: background var(--fast), color var(--fast); }
+.emoji-tabs button:hover, .emoji-tabs button[aria-selected="true"] { background: var(--sel); color: var(--tx); }
+.emoji-grid-wrap { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.emoji-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.emoji-option { display: grid; place-items: center; min-width: 0; height: 40px; border-radius: var(--r-sm); font-size: 23px; transition: background var(--fast), transform var(--fast); }
+.emoji-option:hover, .emoji-option:focus-visible { background: var(--hover); }
+.emoji-option:hover { transform: scale(1.08); }
+.emoji-option img { width: 26px; height: 26px; object-fit: contain; }
+.emoji-empty { display: grid; place-items: center; min-height: 104px; }
+.react-emoji { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; }
+@media (max-width: 480px) { .emoji-picker { width: calc(100vw - 16px); } .emoji-tabs button { padding-inline: 7px; } }
+
 /* custom radio dot (cards variant and any visible radio) */
 .radio input[type="radio"] { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 1.5px solid var(--edge); border-radius: 50%; background: var(--well); display: grid; place-items: center; cursor: pointer; }
 .radio input[type="radio"]::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--pri); transform: scale(0); transition: transform var(--fast); }
