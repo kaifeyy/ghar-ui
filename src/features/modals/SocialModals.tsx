@@ -21,6 +21,7 @@ import { REL_LABEL } from '@/features/home/HomeScreens';
 import { SECTIONS } from '@/features/settings/settingsIndex';
 import type { ModalState } from '@/state/types';
 import { ME } from '@/fixtures/users';
+import { Badges } from '@/features/profile/Badges';
 
 const REASONS: Record<ReportReason, Key> = { spam: msg('Spam'), harassment: msg('Harassment or bullying'), hate: msg('Hate speech'), 'self-harm': msg('Self-harm or suicide'), scam: msg('Scam or fraud'), sexual: msg('Sexual content'), 'minor-safety': msg('Child safety'), other: msg('Something else') };
 const MAX_CONTEXT = 10;
@@ -242,9 +243,10 @@ export function MemberCardModal({ serverId, userId }: { serverId: string; userId
   if (!sv || !user) return null;
   const roles = sv.roles.filter(r => mem?.roleIds.includes(r.id) && !r.system);
   return (
-    <Dialog title={user.name} description={'@' + user.handle} onClose={closeModal} size="sm"
+    <Dialog title={user.name} description={'@' + user.handle} onClose={closeModal} size="sm" className="member-card-dialog"
       footer={<><Button icon={UserIcon} onClick={() => { closeModal(); go({ name: 'profile', userId }); }}>{t('Full profile')}</Button>{userId !== ME && <Button variant="primary" icon={MessageSquare} onClick={() => { closeModal(); go({ name: 'dm', convId: dmWith(userId) }); }}>{t('Message')}</Button>}</>}>
       <div className="row g12"><Avatar userId={userId} size={56} showPresence /><span className="muted small">{user.bio}</span></div>
+      <Badges ids={user.badges} size="compact" />
       <h3 className="label">{t('Roles in {name}', { name: sv.name })}</h3>
       {sv.roleCategories.map(cat => {
         const rs = roles.filter(r => r.categoryId === cat.id);

@@ -68,7 +68,8 @@ export interface Badge {
   id: BadgeId;
   name: string;
   description: string;
-  icon: string; // lucide icon name key
+  image?: string;
+  icon?: string;
   animated?: boolean;
   staffOnly?: boolean;
 }

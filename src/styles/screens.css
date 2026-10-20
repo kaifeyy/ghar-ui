@@ -145,9 +145,27 @@
 .pcard { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-2); }
 .pop-mid { display: inline-flex; align-items: center; gap: 6px; font-size: 26px; line-height: 1.1; }
 .song-ic { width: 36px; height: 36px; border-radius: var(--r-sm); background: var(--sel); display: inline-flex; align-items: center; justify-content: center; flex: none; }
-.badges { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.badge { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border: 1px solid var(--line); background: var(--raise); border-radius: var(--r-full); font-size: 13px; font-weight: 500; }
-.badge:focus-visible { outline-offset: 2px; }
+.badges { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--sp-3); }
+.badge { position: relative; display: flex; flex: 0 0 82px; flex-direction: column; align-items: center; gap: 4px; min-width: 0; color: var(--tx); text-align: center; cursor: help; }
+.badge-icon { display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid color-mix(in srgb, var(--line) 78%, transparent); border-radius: 18px; background: radial-gradient(circle at 32% 24%, color-mix(in srgb, var(--accent) 18%, var(--raise)), var(--raise) 70%); box-shadow: 0 5px 14px rgba(0, 0, 0, .18), inset 0 1px rgba(255,255,255,.12); transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease); }
+.badge-icon img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 5px rgba(0,0,0,.18)); }
+.badge-name { width: 100%; font-size: 11px; line-height: 1.25; font-weight: 600; color: var(--tx-2); overflow-wrap: anywhere; }
+.badge:hover .badge-icon, .badge:focus-visible .badge-icon { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,.24), 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+.badge:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--r-md); }
+.badge-card { position: fixed; z-index: 450; display: flex; align-items: center; gap: 12px; width: min(300px, calc(100vw - 32px)); padding: 12px; border: 1px solid color-mix(in srgb, var(--line) 70%, var(--accent)); border-radius: 16px; background: color-mix(in srgb, var(--raise) 94%, transparent); box-shadow: 0 16px 44px rgba(0,0,0,.36), 0 0 24px color-mix(in srgb, var(--accent) 14%, transparent); backdrop-filter: blur(16px); text-align: start; animation: badge-card-in 140ms var(--ease) both; pointer-events: none; }
+.badge-card-icon { width: 76px; height: 76px; flex: 0 0 76px; display: grid; place-items: center; border-radius: 18px; background: radial-gradient(circle at 30% 24%, color-mix(in srgb, var(--accent) 24%, var(--raise)), var(--main)); }
+.badge-card-icon img { width: 100%; height: 100%; object-fit: contain; }
+.badge-card-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.badge-card-copy b { font-size: 14px; line-height: 1.25; color: var(--tx); }
+.badge-card-copy > span { font-size: 12px; line-height: 1.45; color: var(--tx-2); }
+.badges-compact { gap: var(--sp-2); }
+.badges-compact .badge { flex-basis: 68px; }
+.badges-compact .badge-icon { width: 48px; height: 48px; border-radius: 15px; }
+.badges-compact .badge-name { font-size: 10px; }
+.badge.is-animated .badge-icon { animation: badge-glow 2.4s ease-in-out infinite; }
+@keyframes badge-glow { 50% { box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 34%, transparent), inset 0 1px rgba(255,255,255,.18); } }
+@keyframes badge-card-in { from { opacity: 0; transform: translateY(4px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.mini-profile .badges { justify-content: center; padding: var(--sp-3) var(--sp-3) 0; }
 .highlights { display: flex; gap: var(--sp-3); overflow-x: auto; padding: var(--sp-2) 2px; scrollbar-width: thin; }
 .hl { position: relative; flex: none; }
 .hl-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 84px; }

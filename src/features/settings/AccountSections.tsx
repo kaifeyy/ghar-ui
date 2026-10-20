@@ -19,6 +19,7 @@ import { Art } from '@/ui/Art';
 import { SettingsBody } from './SettingsPage';
 import { SHOP } from '@/fixtures/commerce';
 import { TITLES, ME } from '@/fixtures/users';
+import { Badges } from '@/features/profile/Badges';
 import { DatePicker } from '@/ui/Pickers';
 
 const RULE_TEXT: Record<string, Key> = { 'too-short': msg('At least 3 characters.'), 'too-long': msg('32 characters at most.'), charset: msg('Use only a–z, 0–9, underscore and dot.'), 'dot-edge': msg('Can’t start or end with a dot.'), 'double-dot': msg('No two dots in a row.') };
@@ -169,6 +170,7 @@ export function ProfileSection() {
             <b className="mini-name" dir="auto">{f.name || '—'}{f.flag ? (f.flag === 'PK' ? <Flag size={16} aria-hidden="true" className="flag" /> : <MapPin size={16} aria-hidden="true" className="flag" />) : null}</b>
             <span className="meta ltr">@{me.handle}</span>
             {f.titleId && <Tag>{TITLES.find(x => x.id === f.titleId)?.name}</Tag>}
+            <Badges ids={me.badges} size="compact" />
             <p className="small muted plain" dir="auto">{f.bio}</p>
           </div>
         </aside>

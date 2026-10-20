@@ -1,7 +1,7 @@
 import { SocialChips } from '@/features/social/SocialLinks';
 import { useShallow } from 'zustand/react/shallow';
 import { useMemo } from 'react';
-import { X, MapPin, MessageSquare, Phone, UserPlus, UserMinus, Ban, Flag, Gift, CircleDollarSign, Pencil, Music, Flame, Play, Home, Code, ShieldCheck, FlaskConical, CalendarDays, Video, Lightbulb, Link2, Clock, Eye, Plus, LogIn } from 'lucide-react';
+import { X, MapPin, MessageSquare, Phone, UserPlus, UserMinus, Ban, Flag, Gift, CircleDollarSign, Pencil, Music, Flame, Play, Plus, LogIn } from 'lucide-react';
 import { useApp } from '@/state/store';
 import { usePresence } from '@/state/selectors';
 import { go, openModal } from '@/state/actions/ui';
@@ -22,24 +22,9 @@ import { BoostedTag } from '@/features/popularity/PopularityPage';
 import { REL_LABEL } from '@/features/home/HomeScreens';
 import { OTHER_RELATIONSHIPS } from '@/fixtures/social';
 import { ME, TITLES } from '@/fixtures/users';
+import { Badges } from './Badges';
 
 const NO_MEDIA: { avatar?: string; banner?: string } = {};
-const BADGE_ICON: Record<string, typeof Home> = { home: Home, code: Code, 'shield-check': ShieldCheck, flask: FlaskConical, calendar: CalendarDays, video: Video, lightbulb: Lightbulb, link: Link2, clock: Clock, eye: Eye };
-
-export function Badges({ ids, staffView = false }: { ids: string[]; staffView?: boolean }) {
-  const catalog = useApp(s => s.badgeCatalog);
-  const list = ids.map(id => catalog.find(b => b.id === id)).filter(b => b && (!b.staffOnly || staffView));
-  if (!list.length) return null;
-  return (
-    <ul className="badges">
-      {list.map(b => { const I = BADGE_ICON[b!.icon] ?? ShieldCheck; return (
-        <li key={b!.id} className={`badge ${b!.animated ? 'is-animated' : ''}`} data-tip={b!.description} tabIndex={0} aria-label={`${b!.name}: ${b!.description}`}>
-          <I size={14} aria-hidden="true" /><span>{b!.name}</span>
-        </li>
-      ); })}
-    </ul>
-  );
-}
 
 export function Profile({ userId }: { userId: string }) {
   const t = useT();
